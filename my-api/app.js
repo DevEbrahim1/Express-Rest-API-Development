@@ -9,6 +9,7 @@ const app=new express();
 const xss= require('xss-clean')
 const hpp = require('hpp')
 const cors= require('cors')
+const mongoose= require('mongoose');
 
 //Security Middleware Implement
 app.use(cors())
@@ -23,6 +24,20 @@ const limiter = rateLimit({
     max: 100 // limit each Ip to 100
 });
 app.use(limiter)
+
+//MongoDB Database Connection
+let URI = "mongodb://127.0.0.1:27017/CraftShop";
+let OPTION = { user: '', pass: '' };
+
+mongoose.connect(URI, OPTION)
+    .then(() => {
+        console.log("Connection Success");
+    })
+    .catch((error) => {
+        console.log("Connection Failed:", error);
+    });
+
+
 
 //Router
 app.use("/api/v1",router);
