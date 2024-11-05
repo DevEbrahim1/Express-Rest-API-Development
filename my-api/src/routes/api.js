@@ -16,6 +16,9 @@ router.post("/hello-post",helloController.HelloPost)
 
 //mogoose
 router.post("/InsertStudents",StudentsController.InsertStudents)
+router.get("/ReadStudents",StudentsController.ReadStudents)
+router.put("/UpdateStudents/:id",StudentsController.UpdateStudents)
+router.get("/DeleteStudents/:id",StudentsController.DeleteStudents)
 
 
 
