@@ -1,6 +1,10 @@
 const express = require('express');
 const helloController = require("../controllers/helloController");
 const StudentsController = require("../controllers/StudentsController");
+const TokenissueController = require("../controllers/TokenissueController");
+const JWTPractice = require('../controllers/JWTPractice');
+const TokenVerifyMiddleware = require('../middleware/TokenVerifyMiddleware');
+
 
 
 
@@ -14,12 +18,17 @@ router.get("/hello-get",helloController.HelloGet)
 router.post("/hello-post",helloController.HelloPost)
 
 
-//mogoose
-router.post("/InsertStudents",StudentsController.InsertStudents)
-router.get("/ReadStudents",StudentsController.ReadStudents)
-router.put("/UpdateStudents/:id",StudentsController.UpdateStudents)
-router.get("/DeleteStudents/:id",StudentsController.DeleteStudents)
+//mogoose appay JWS Auth
+router.get("/TokenIssue",TokenissueController.TokenIssue)
+router.post("/InsertStudents",TokenVerifyMiddleware,StudentsController.InsertStudents)
+router.get("/ReadStudents",TokenVerifyMiddleware,StudentsController.ReadStudents)
+router.put("/UpdateStudents/:id",TokenVerifyMiddleware,StudentsController.UpdateStudents)
+router.get("/DeleteStudents/:id",TokenVerifyMiddleware,StudentsController.DeleteStudents)
 
 
+//Practice Create JWT Token
+router.get("/CreateToken",JWTPractice.CreateToken)
+//Decode JWT Token
+router.get("/DecodeToken",JWTPractice.DecodeToken)
 
 module.exports=router;
