@@ -20,6 +20,7 @@
     "hpp": "^0.2.3",
     "jsnwebtokn": "^0.0.1-security.0",
     "mongoose": "^8.8.1",
+    "nodemon": "^3.1.7",
     "xss-clean": "^0.1.4"
   }
 }
