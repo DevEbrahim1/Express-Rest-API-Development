@@ -3,9 +3,9 @@ const DataScema=mongoose.Schema({
     FirstName:{type:String},
     LastName:{type:String},
     EmailAddress:{type:String},
-    MOblileNumber:{type:String},
+    MoblileNumber:{type:String},
     City:{type:String},
-    UserName:{type:String},
+    UserName:{type:String,unique:true},
     Password:{type:String}
 
 },{versionKey:false});

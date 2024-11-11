@@ -1,6 +1,6 @@
 const ProfileModel = require('../models/ProfileModel');
 
-
+//User Registration
 exports.CreateProfile = async (req, res) => {
     try {
         let reqBody = req.body;
@@ -10,4 +10,33 @@ exports.CreateProfile = async (req, res) => {
         res.status(400).json({ status: "Fail", data: err });
     }
 };
+// User Login
+const jwt = require('jsonwebtoken');
+
+exports.UserLogin = async (req, res) => {
+    try {
+        let UserName = req.body['UserName'];
+        let Password = req.body['Password'];
+
+        // Use await with .findOne() for single user search
+        let user = await ProfileModel.findOne({ UserName: UserName, Password: Password });
+
+        if (user) {
+            // Create AUTH Web Token
+            let payload = {
+                exp: Math.floor(Date.now() / 1000) + (24 * 60 * 60),
+                data: user
+            };
+            let token = jwt.sign(payload, 'SecretKey123456789');
+            res.status(200).json({ status: "success", token: token, data: user });
+        } else {
+            res.status(401).json({ status: "fail", message: "Invalid username or password" });
+        }
+    } catch (err) {
+        res.status(500).json({ status: "error", message: err.message });
+    }
+};
+
+
+
 

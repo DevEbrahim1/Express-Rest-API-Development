@@ -32,7 +32,7 @@ app.use(Limiter)
 
 //Mongo Db Batabase Connection
 let URI="mongodb://127.0.0.1:27017/Todo";
-let OPTION={user:'',pass:''}
+let OPTION={user:'',pass:'',autoIndex:true}
 // Async function ব্যবহার করে সংযোগ স্থাপন
 async function connectDB() {
     try {
