@@ -51,6 +51,12 @@ exports.SelectProfile = async (req, res) => {
         res.status(400).json({ status: "fail", data: err.message });
     }
 };
+//Update Profile
+exports.UpdateProfile =(req, res) => {
+        let UserName = req.headers['UserName']; // Use username from headers set by middleware
+        let reqBody=req.body;
+        res.status(200).json(reqBody)
+}
 
 
 
