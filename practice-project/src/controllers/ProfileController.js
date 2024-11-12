@@ -1,4 +1,5 @@
 const ProfileModel = require('../models/ProfileModel');
+const jwt = require('jsonwebtoken');
 
 //User Registration
 exports.CreateProfile = async (req, res) => {
@@ -11,7 +12,7 @@ exports.CreateProfile = async (req, res) => {
     }
 };
 // User Login
-const jwt = require('jsonwebtoken');
+
 
 exports.UserLogin = async (req, res) => {
     try {
@@ -36,6 +37,24 @@ exports.UserLogin = async (req, res) => {
         res.status(500).json({ status: "error", message: err.message });
     }
 };
+
+// User Read
+exports.SelectProfile = async (req, res) => {
+    try {
+        let UserName = req.headers['UserName']; // Use username from headers set by middleware
+        
+        // Mongoose async-await এর সাথে ব্যবহার
+        let data = await ProfileModel.find({ UserName: UserName });
+        
+        res.status(200).json({ status: "success", data: data });
+    } catch (err) {
+        res.status(400).json({ status: "fail", data: err.message });
+    }
+};
+
+
+
+
 
 
 
