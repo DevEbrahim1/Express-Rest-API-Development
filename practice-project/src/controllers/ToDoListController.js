@@ -33,3 +33,22 @@ exports.CreateToDo = async (req, res) => {
         res.status(400).json({ status: "Fail", data: err.message });
     }
 };
+//read
+
+// ToDo Read
+exports.SelectToDo = async (req, res) => {
+    try {
+        let UserName = req.headers['username'];
+        
+        if (!UserName) {
+            return res.status(401).json({ status: "Unauthorized", message: "UserName not found in headers" });
+        }
+
+        // MongoDB থেকে নির্দিষ্ট UserName এর সব ToDo আইটেম রিড করা
+        let data = await ToDoListModel.find({ UserName: UserName });
+
+        res.status(200).json({ status: "success", data: data });
+    } catch (err) {
+        res.status(400).json({ status: "Fail", data: err.message });
+    }
+};

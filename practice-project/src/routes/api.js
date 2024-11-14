@@ -10,8 +10,9 @@ router.post('/UserLogin',ProfileController.UserLogin);
 router.get('/SelectProfile',AuthVerifyMiddleware,ProfileController.SelectProfile);
 router.post('/UpdateProfile',AuthVerifyMiddleware,ProfileController.UpdateProfile);
 
-//Create Todo Router
+//Create Todo Router 
 router.post('/CreateToDo',AuthVerifyMiddleware,ToDoListController.CreateToDo);
+router.get('/SelectToDo',AuthVerifyMiddleware,ToDoListController.SelectToDo);
 
 
 
