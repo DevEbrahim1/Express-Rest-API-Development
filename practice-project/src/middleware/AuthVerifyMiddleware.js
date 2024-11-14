@@ -6,10 +6,13 @@ module.exports = (req, res, next) => {
         if (err) {
             res.status(401).json({ status: "Unauthorized" });
         } else {
-            // Get username From Decoded Token & Add With Req Header
-            let username = decode['data']['UserName'];
-            req.headers['UserName'] = username;
-            next();
+            let username = decode?.data?.UserName; // Optional chaining ব্যবহার
+            if (username) {
+                req.headers['username'] = username; // Ensure lower-case 'username'
+                next();
+            } else {
+                res.status(400).json({ status: "Fail", message: "UserName not found in token" });
+            }
         }
     });
 };
