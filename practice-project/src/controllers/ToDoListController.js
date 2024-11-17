@@ -52,3 +52,46 @@ exports.SelectToDo = async (req, res) => {
         res.status(400).json({ status: "Fail", data: err.message });
     }
 };
+
+// ToDo Update
+
+const mongoose = require('mongoose'); // mongoose ইনপোর্ট করা
+
+exports.UpdateToDo = async (req, res) => {
+    try {
+        const { TodoSubject, TodoDescription, _id } = req.body;
+        const TodoUpdateDate = Date.now();
+
+        // Check if the provided _id is valid
+        if (!mongoose.Types.ObjectId.isValid(_id)) {
+            return res.status(400).json({ status: "fail", message: "Invalid ID format" });
+        }
+
+        // Prepare update data
+        const PostBody = {
+            TodoSubject:TodoSubject,
+            TodoDescription:TodoDescription,
+            TodoUpdateDate:TodoUpdateDate,
+        }
+
+        // Update the ToDo item in MongoDB
+        const data = await ToDoListModel.updateOne(
+            { _id: _id },      // Condition to find the specific document
+            { $set: PostBody }, // Update the provided fields
+            { upsert: true }   // Do not insert new document if not found
+        );
+
+        // Check if any document was matched
+        if (data.matchedCount === 0) {
+            return res.status(404).json({ status: "fail", message: "ToDo item not found" });
+        }
+
+        // Success response
+        res.status(200).json({ status: "success", data });
+    } catch (error) {
+        // Handle errors
+        res.status(500).json({ status: "fail", message: error.message });
+    }
+};
+
+
