@@ -89,7 +89,7 @@ exports.UpdateToDo = async (req, res) => {
         // Success response
         res.status(200).json({ status: "success", data });
     } catch (error) {
-        // Handle errors
+        // Handle error
         res.status(500).json({ status: "fail", message: error.message });
     }
 };
